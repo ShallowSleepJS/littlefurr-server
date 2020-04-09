@@ -78,4 +78,3 @@ function testDelete(){
     console.log('remove()',err,doc);
   });
 }
-testDelete();
