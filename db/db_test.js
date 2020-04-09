@@ -15,12 +15,24 @@ conn.on('connected',function(){
 //2.Setup User data Model
 //2.1 user Schema
 const userSchema = mongoose.Schema({
-  emailAddress:{type:String, required:true},
+  emailAddress:{type:String, required:true},//邮箱作为用户名
   password:{type:String, required:true},
-  securityQ1:{type:String, required:true},
-  securityQ1A:{type:String, required:true},
-  securityQ2:{type:String, required:true},
-  securityQ2A:{type:String, required:true},
+  security:{//安全问题及答案
+    sq1:{type:String, required:true},//sqDB_id
+    sq2:{type:String, required:true},
+    sq1a:{type:String, required:true},//sqDB_id
+    sq2a:{type:String, required:true},
+  },
+  nickname:{type:String},//昵称=用于显示的用户名
+  description:{type:String},//个性签名
+  profilePhoto:{type:String},//用户头像
+  gender:{type:String},//genderDB_id
+  privacy:{type:String},//隐私设置privicyDB_id
+  location:{
+    country:String,
+    state:String, //省直辖市/州
+    city:String,
+  },
 });
 //2.2 User Model
 const UserModel = mongoose.model('user',userSchema);//constructor
@@ -32,10 +44,13 @@ function testSave(){
   const userModel = new UserModel({
     emailAddress:'suriel_s@yahoo.com',
     password:md5('12345'),
-    securityQ1:'Dog\'name?',
-    securityQ1A:'Tora',
-    securityQ2:'Cat\'name?',
-    securityQ2A:'Ciel',
+    security:{
+      sq1:'Dog\'name?',//暂时使用文字测试
+      sq1a:'Tora',
+      sq2:'Cat\'name?',
+      sq2a:'Ciel',
+    },
+    nickname:'ShallowSleeper',
   });
   userModel.save(function(err,doc){
     console.log('save()',err,doc);
