@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const { UserModel } = require('../db/models');
 const md5 = require('blueimp-md5');
+const filter = {password:0,__v:0};//filter 'password','__v'
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -58,6 +59,7 @@ router.post('/register',function(req,res){
           sq2a:securityQ2A,
         },
       }).save(function(err,user){
+      //3. response
         //register后默认已login。可用cookie或session。
         //generate cookie(userid:user._id) for browser 24hr
         res.cookie('userid',user._id,{maxAge:1000*60*60*24});
@@ -75,11 +77,23 @@ router.post('/register',function(req,res){
       });
     }
   });
-
-  //3. response
 });
 
-
 //Login router
+router.post('/login',function(req,res){
+  // get reqest para
+  const { emailAddress,password } = req.body;
+  // check if email,pwd match db
+  UserModel.findOne({emailAddress,password:md5(password)},filter,function(err,user){
+    if(user){
+      // email&&pwd correct. login success
+      res.cookie('userid',user._id,{maxAge:1000*60*60*24});
+      res.send({code:0,data:user});
+    }else{
+      // email|pwd wrong. login fall
+      res.send({code:1,msg:'用户邮箱或密码错误'});
+    }
+  });
+});
 
 module.exports = router;
