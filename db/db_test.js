@@ -56,8 +56,26 @@ function testSave(){
     console.log('save()',err,doc);
   });
 }
-testSave();
 //3.2 Search: find(),findOne()
-
+function testFind(){
+  UserModel.find(function(err,docs){
+    console.log('find()',err,docs);
+  });
+  UserModel.findOne({_id:'5e8ec2c3e22be92968764e0c'},function(err,doc){
+    console.log('findOne()',err,doc);
+  });
+}
 //3.3 Update: findByIdAndUpdate()
+function testUpdate(){
+  UserModel.findByIdAndUpdate({_id:'5e8ec2c3e22be92968764e0c'},{gender:'Female'},function(err,doc){
+    //doc为修改之前的object
+    console.log('findByIdAndUpdate()',err,doc);
+  });
+}
 //3.4 Delete: remove()
+function testDelete(){
+  UserModel.remove({_id:'5e8ea2fc09c29d27ab5b2a0c'},function(err,doc){
+    console.log('remove()',err,doc);
+  });
+}
+testDelete();
