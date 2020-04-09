@@ -23,7 +23,7 @@ router.post('/register',function(req,res){
     res.send({code:1, msg:'此用户已存在'});
   }else{
     res.send({code:0,data:{
-      UserId:'abc',
+      _id:'abc',//UserId
       EmailAddress:emailAddress,
       Password:password,
       SecurityQ1Id:securityQ1Id,
