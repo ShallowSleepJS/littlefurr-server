@@ -61,10 +61,12 @@ function testFind(){
   UserModel.find(function(err,docs){
     console.log('find()',err,docs);
   });
-  UserModel.findOne({_id:'5e8ec2c3e22be92968764e0c'},function(err,doc){
-    console.log('findOne()',err,doc);
-  });
+  // UserModel.findOne({_id:'5e8ec2c3e22be92968764e0c'},function(err,doc){
+  //   console.log('findOne()',err,doc);
+  // });
 }
+testFind()
+
 //3.3 Update: findByIdAndUpdate()
 function testUpdate(){
   UserModel.findByIdAndUpdate({_id:'5e8ec2c3e22be92968764e0c'},{gender:'Female'},function(err,doc){

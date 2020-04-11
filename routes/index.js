@@ -49,6 +49,7 @@ router.post('/register',function(req,res){
       res.send({code:1,msg:'用户已存在'});
     }else{
       //save user to db
+      console.log('server register', emailAddress,password,securityQ1Id,securityQ1A,securityQ2Id,securityQ2A);
       new UserModel({
         emailAddress,
         password:md5(password),
