@@ -74,7 +74,7 @@ router.post('/register',function(req,res){
             sq2a:securityQ2A,
           }
         };
-        res.send({code:200,data});
+        res.send({code:201,data});
       });
     }
   });
@@ -89,7 +89,7 @@ router.post('/login',function(req,res){
     if(user){
       // email&&pwd correct. login success
       res.cookie('userid',user._id,{maxAge:1000*60*60*24});
-      res.send({code:200,data:user});
+      res.send({code:201,data:user});
     }else{
       // email|pwd wrong. login fall
       res.send({code:400,msg:'用户邮箱或密码错误'});
