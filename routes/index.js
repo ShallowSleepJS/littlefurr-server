@@ -46,7 +46,7 @@ router.post('/register',function(req,res){
   UserModel.findOne({emailAddress},function(err,doc){
     if(doc){
       //user already exist
-      res.send({code:1,msg:'用户已存在'});
+      res.send({code:400,msg:'用户已存在'});
     }else{
       //save user to db
       console.log('server register', emailAddress,password,securityQ1Id,securityQ1A,securityQ2Id,securityQ2A);
@@ -74,7 +74,7 @@ router.post('/register',function(req,res){
             sq2a:securityQ2A,
           }
         };
-        res.send({code:0,data});
+        res.send({code:200,data});
       });
     }
   });
@@ -89,10 +89,10 @@ router.post('/login',function(req,res){
     if(user){
       // email&&pwd correct. login success
       res.cookie('userid',user._id,{maxAge:1000*60*60*24});
-      res.send({code:0,data:user});
+      res.send({code:200,data:user});
     }else{
       // email|pwd wrong. login fall
-      res.send({code:1,msg:'用户邮箱或密码错误'});
+      res.send({code:400,msg:'用户邮箱或密码错误'});
     }
   });
 });
