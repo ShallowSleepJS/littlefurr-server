@@ -70,8 +70,25 @@ Node+Express, EJS view engine, Mongodb
     |Parameter      |Required   |Type     |Description
     |nickname       |F          |string   |show as username
     |profilePhoto   |F          |string   |
-    |gender         |F          |string   |
-    |privacy        |F          |string   |Privacy setting
+    |gender         |F          |string   | "male" | "female"
+    |privacy        |F          |string   |Setting: public(default) | private | other
     |country        |F          |string   |location.country
     |state          |F          |string   |location.state
     |city           |F          |string   |location.city
+### Return:
+        success:
+        {
+          "code":0,
+          "data": {
+            "nickname" : "Ciel",
+            "profilePhoto":"...",
+            "gender":"female",
+            "privacy" : "public",
+            "location": {
+                "country":"China",
+                "state":"",
+                "city":"Shanghai",
+              }
+            }
+        }
+        fail:{"code":1,"msg":"oops...请重新登录！"}

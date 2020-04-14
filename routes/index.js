@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
   }
 });*/
 
-//Register router
+//User Register router
 router.post('/register',function(req,res){
   //1. get request data
   const { emailAddress,password,securityQ1Id,securityQ1A,securityQ2Id,securityQ2A } = req.body;
@@ -80,7 +80,7 @@ router.post('/register',function(req,res){
   });
 });
 
-//Login router
+//User Login router
 router.post('/login',function(req,res){
   // get reqest para
   const { emailAddress,password } = req.body;
@@ -93,6 +93,42 @@ router.post('/login',function(req,res){
     }else{
       // email|pwd wrong. login fall
       res.send({code:400,msg:'用户邮箱或密码错误'});
+    }
+  });
+});
+
+//User Info Update Route
+router.post('/update', function(req,res){
+  //get userid from cookie
+  const userid = req.cookies.userid;
+  // if !userid, return err_msg;
+  if(!userid){
+    return res.send({code:400,msg:'请重新登录！'})
+  }
+  //get user Update-Info from req
+  const {nickname,description,profilePhoto,gender,privacy,country,state,city} = req.body; //update req has no _id
+  //reset user structure for location{}
+  const user = {
+    nickname,
+    description,
+    profilePhoto,
+    gender,
+    privacy,
+    location:{country,state,city}
+  }
+  UserModel.findByIdAndUpdate({_id: userid},user,function(err,oldUser){
+    if(!oldUser){ //!oldUser: cookie is wrong
+      //tell browser del the cookie
+      res.clearCookie('userid');
+      //send err msg
+      res.send({code:400,msg:'请重新登录！'});
+    }else{
+      //update success. return a newUser
+      const { _id, emailAddress } = oldUser;
+      //Object.assign - merge multi objects return one object
+      const newUser = Object.assign(user,{ _id, emailAddress });
+      //send msg
+      res.send({code:201,data:newUser});
     }
   });
 });
