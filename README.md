@@ -32,6 +32,15 @@ Node+Express, EJS view engine, Mongodb
             "sq2":"question2?",
             "sq2a":"answer2",
           }
+        "nickname" : "Ciel",
+        "profilePhoto":"...",
+        "gender":"female",
+        "privacy" : "public",
+        "location": {
+            "country":"China",
+            "state":"",
+            "city":"Shanghai",
+          }
         }
       }
       fail:{"code":1,"msg":"用户已存在"}
@@ -57,6 +66,15 @@ Node+Express, EJS view engine, Mongodb
             "sq1a":"answer1",
             "sq2":"question2?",
             "sq2a":"answer2",
+          }
+        "nickname" : "Ciel",
+        "profilePhoto":"...",
+        "gender":"female",
+        "privacy" : "public",
+        "location": {
+            "country":"China",
+            "state":"",
+            "city":"Shanghai",
           }
         }
     }

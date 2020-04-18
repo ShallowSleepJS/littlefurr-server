@@ -59,6 +59,12 @@ router.post('/register',function(req,res){
           sq2:securityQ2Id,
           sq2a:securityQ2A,
         },
+        nickname:'',
+        description:'',
+        profilePhoto:'',
+        gender:'',
+        privacy:'',
+        location:{country:'',state:'',city:''}
       }).save(function(err,user){
       //3. response
         //register后默认已login。可用cookie或session。
@@ -72,7 +78,13 @@ router.post('/register',function(req,res){
             sq1a:securityQ1A,
             sq2:securityQ2Id,
             sq2a:securityQ2A,
-          }
+          },
+          nickname:'',//注册后会跳转到user_info页面，需要nickname->location的信息。
+          description:'',
+          profilePhoto:'',
+          gender:'',
+          privacy:'',
+          location:{country:'',state:'',city:''}
         };
         res.send({code:201,data});
       });
@@ -88,7 +100,7 @@ router.post('/login',function(req,res){
   UserModel.findOne({emailAddress,password:md5(password)},filter,function(err,user){
     if(user){
       // email&&pwd correct. login success
-      res.cookie('userid',user._id,{maxAge:1000*60*60*24});
+      res.cookie('userid',user._id,{maxAge:1000*60*60});//change cookie to 1hr for later testing
       res.send({code:201,data:user});
     }else{
       // email|pwd wrong. login fall
@@ -98,7 +110,7 @@ router.post('/login',function(req,res){
 });
 
 //User Info Update Route
-router.post('/update', function(req,res){
+router.post('/user_info_update', function(req,res){
   //get userid from cookie
   const userid = req.cookies.userid;
   // if !userid, return err_msg;
@@ -130,6 +142,16 @@ router.post('/update', function(req,res){
       //send msg
       res.send({code:201,data:newUser});
     }
+  });
+});
+
+/*
+  Admin-Only User Management Routes
+*/
+//All Users
+router.get('/all_user',function(req,res){
+  UserModel.find(function(err,data){
+    res.send({data});
   });
 });
 
