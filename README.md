@@ -22,7 +22,7 @@ Node+Express, EJS view engine, Mongodb
 ### Return:
     success:
     {
-      "code":0,
+      "code":201,
       "data": {
         "id" : "5ea............",
         "emailAddress":"abc@example.com",
@@ -43,7 +43,7 @@ Node+Express, EJS view engine, Mongodb
           }
         }
       }
-      fail:{"code":1,"msg":"用户已存在"}
+      fail:{"code":400,"msg":"用户已存在"}
 
 ## 2. Login Interface
 ### Request URL:
@@ -57,7 +57,7 @@ Node+Express, EJS view engine, Mongodb
 ### Return:
     success:
     {
-      "code":0,
+      "code":201,
       "data": {
         "id" : "5ea............",
         "emailAddress":"abc@example.com",
@@ -78,12 +78,14 @@ Node+Express, EJS view engine, Mongodb
           }
         }
     }
-    fail:{"code":1,"msg":"用户邮箱或密码错误"}
+    fail:{"code":400,"msg":"用户邮箱或密码错误"}
 
 
 ## 3. Update Interface
 ### Request URL:
     localhost:4000/update
+### Request Type:
+    Post
 ### Parameter:
     |Parameter      |Required   |Type     |Description
     |nickname       |F          |string   |show as username
@@ -96,7 +98,7 @@ Node+Express, EJS view engine, Mongodb
 ### Return:
         success:
         {
-          "code":0,
+          "code":201,
           "data": {
             "nickname" : "Ciel",
             "profilePhoto":"...",
@@ -109,4 +111,38 @@ Node+Express, EJS view engine, Mongodb
               }
             }
         }
-        fail:{"code":1,"msg":"oops...请重新登录！"}
+        fail:{"code":400,"msg":"oops...请重新登录！"}
+
+
+##4. Find the User in Cookie
+### Request URL:
+    localhost:3000/user
+### Request Type:
+    GET
+### Parameter:
+    null
+### Return
+    success:
+    {
+      "code":200,
+      "data": {
+        "id" : "5ea............",
+        "emailAddress":"abc@example.com",
+        "security": {
+            "sq1":"question1?",
+            "sq1a":"answer1",
+            "sq2":"question2?",
+            "sq2a":"answer2",
+          }
+        "nickname" : "Ciel",
+        "profilePhoto":"...",
+        "gender":"female",
+        "privacy" : "public",
+        "location": {
+            "country":"China",
+            "state":"",
+            "city":"Shanghai",
+          }
+        }
+    }
+    fail:{"code":400,"msg":"请重新登录！"}

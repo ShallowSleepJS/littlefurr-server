@@ -68,8 +68,8 @@ router.post('/register',function(req,res){
       }).save(function(err,user){
       //3. response
         //register后默认已login。可用cookie或session。
-        //generate cookie(userid:user._id) for browser 24hr
-        res.cookie('userid',user._id,{maxAge:1000*60*60*24});
+        //generate cookie(userid:user._id) for browser 1hr
+        res.cookie('userid',user._id,{maxAge:1000*60*60});
         const data = {
           _id:user._id,
           emailAddress,
@@ -100,7 +100,7 @@ router.post('/login',function(req,res){
   UserModel.findOne({emailAddress,password:md5(password)},filter,function(err,user){
     if(user){
       // email&&pwd correct. login success
-      res.cookie('userid',user._id,{maxAge:1000*60*60});//change cookie to 1hr for later testing
+      res.cookie('userid',user._id,{maxAge:1000*60*60});
       res.send({code:201,data:user});
     }else{
       // email|pwd wrong. login fall
@@ -111,6 +111,11 @@ router.post('/login',function(req,res){
 
 //User Info Update Route
 router.post('/user_info_update', function(req,res){
+  /*
+    use the '_id' from cookie as validation;
+    no _id -- no login
+    incorrect _id -- the cookie has problem
+  */
   //get userid from cookie
   const userid = req.cookies.userid;
   // if !userid, return err_msg;
@@ -144,6 +149,24 @@ router.post('/user_info_update', function(req,res){
     }
   });
 });
+
+
+//Find the User in the Cookie (userid)
+router.get('/user',function(req,res){
+  //get userid from cookie
+  const userid = req.cookies.userid;
+  //if userid not exist, return login-again msg
+  if(!userid){
+    return res.send({code:400, msg:'请先登录！'})
+  }
+  //find the User
+  UserModel.findOne({_id:userid},filter,function(err,user){
+    //send
+    res.send({code:200, data:user});
+  });
+});
+
+
 
 /*
   Admin-Only User Management Routes
