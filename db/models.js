@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
   },
   nickname:{type:String},//昵称=用于显示的用户名
   description:{type:String},//个性签名
-  profilePhoto:{type:String},//用户头像
+  profilePhoto:{type:Object},//头像 antdmobile接收传回的是对象
   gender:{type:String},//genderDB_id 'male/female'
   privacy:{type:String},//隐私设置privicyDB_id
   location:{
