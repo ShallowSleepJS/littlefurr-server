@@ -37,3 +37,16 @@ const userSchema = mongoose.Schema({
 const UserModel = mongoose.model('user',userSchema);
 //2.3 Export Model
 exports.UserModel = UserModel;
+
+
+//----petListModel---for UI to show pet list-
+//1. Schema
+const petListSchema = mongoose.Schema({
+  ownerId:{type:String, required:true},
+  name:{type:String, required:true},
+  profilePhoto:{type:Object},
+});
+//2. Model
+const PetListModel = mongoose.model('petList',petListSchema);
+//export
+exports.PetListModel = PetListModel;

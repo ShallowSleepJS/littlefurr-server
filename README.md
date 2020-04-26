@@ -89,7 +89,7 @@ Node+Express, EJS view engine, Mongodb
 ### Parameter:
     |Parameter      |Required   |Type     |Description
     |nickname       |F          |string   |show as username
-    |profilePhoto   |F          |string   |
+    |profilePhoto   |F          |object   |
     |gender         |F          |string   | "male" | "female"
     |privacy        |F          |string   |Setting: public(default) | private | other
     |country        |F          |string   |location.country
@@ -146,3 +146,15 @@ Node+Express, EJS view engine, Mongodb
         }
     }
     fail:{"code":400,"msg":"请重新登录！"}
+
+
+
+# Pet-Module Interface-doc
+## Pet related data-model
+### Collections:
+  - petList - PetId, UserId(FK), Name, ProfilePhoto,
+  - pet_detail - PetId, Species, BreedId, Gender, Sterilization, DOB,
+  - pet_weight_record - PetId, WeightAge, WeightDate, WeightNum, WeightUnit
+  - pet_daily_care - PetId, ItemName, Cycle, CreatedDate??, LastProcessDate,
+  - pet_purchase_record: PetId, Date, SupplyItem, SupplyCategory, Amount, ExpectUseUpdDate, Expense,
+  

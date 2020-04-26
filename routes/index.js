@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { UserModel } = require('../db/models');
+const { UserModel,PetListModel } = require('../db/models');
 const md5 = require('blueimp-md5');
 const filter = {password:0,__v:0};//filter 'password','__v'
 
@@ -49,7 +49,6 @@ router.post('/register',function(req,res){
       res.send({code:400,msg:'用户已存在'});
     }else{
       //save user to db
-      console.log('server register', emailAddress,password,securityQ1Id,securityQ1A,securityQ2Id,securityQ2A);
       new UserModel({
         emailAddress,
         password:md5(password),
@@ -65,6 +64,7 @@ router.post('/register',function(req,res){
         gender:'',
         privacy:'',
         location:{country:'',state:'',city:''}
+        //全部initialize传回给redux后,state才会有user上述的所有属性
       }).save(function(err,user){
       //3. response
         //register后默认已login。可用cookie或session。
@@ -177,5 +177,26 @@ router.get('/all_user',function(req,res){
     res.send({data});
   });
 });
+
+/*Pet Module*/
+//new pet
+router.post('/pet_new',function(req,res){
+  //get userid from cookie
+  const userid = req.cookies.userid;
+  // if no userid, return login-again msg
+  if(!userid){
+    return res.send({code:400, msg:'请先登录！'})
+  }
+  //get pet info from req
+  const {name,profilePhoto} = req.body;
+  new PetListModel({
+    ownerId: userid,
+    name,
+    profilePhoto,
+  }).save(function(err,doc){
+    res.send({code:201, data:doc});
+  });
+});
+
 
 module.exports = router;
