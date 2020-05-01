@@ -152,9 +152,30 @@ Node+Express, EJS view engine, Mongodb
 # Pet-Module Interface-doc
 ## Pet related data-model
 ### Collections:
-  - petList - PetId, UserId(FK), Name, ProfilePhoto,
+  - petList - PetId, UserId(FK), Name, ProfilePhoto, createDate
   - pet_detail - PetId, Species, BreedId, Gender, Sterilization, DOB,
   - pet_weight_record - PetId, WeightAge, WeightDate, WeightNum, WeightUnit
   - pet_daily_care - PetId, ItemName, Cycle, CreatedDate??, LastProcessDate,
   - pet_purchase_record: PetId, Date, SupplyItem, SupplyCategory, Amount, ExpectUseUpdDate, Expense,
-  
+
+
+## 1. New a Pet Interface
+### Request URL:
+    localhost:4000/pet/pet_new
+### Request Type:
+    POST
+### Parameter:
+    |Parameter      |Required   |Type     |Description
+    |name           |T          |string   |pet name
+    |profilePhoto   |F          |string   |
+### Return:
+    success:
+    {
+        "code": 201,
+        "data": {
+            "id": "5eac28fe76596d7e90cc41d7",
+            "ownerId": "5e91f48937be861d138ce6f3",
+            "name": "tora",
+            "profilePhoto": "",
+        }
+    }

@@ -45,6 +45,7 @@ const petListSchema = mongoose.Schema({
   ownerId:{type:String, required:true},
   name:{type:String, required:true},
   profilePhoto:{type:Object},
+  createDate:{type:Date, default:Date.now},
 });
 //2. Model
 const PetListModel = mongoose.model('petList',petListSchema);

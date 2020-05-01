@@ -1,13 +1,9 @@
+/*Default User Model Routers*/
 var express = require('express');
 var router = express.Router();
 const { UserModel,PetListModel } = require('../db/models');
 const md5 = require('blueimp-md5');
 const filter = {password:0,__v:0};//filter 'password','__v'
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
 //Register a Route for UserRegister
 /*
@@ -175,26 +171,6 @@ router.get('/user',function(req,res){
 router.get('/all_user',function(req,res){
   UserModel.find(function(err,data){
     res.send({data});
-  });
-});
-
-/*Pet Module*/
-//new pet
-router.post('/pet_new',function(req,res){
-  //get userid from cookie
-  const userid = req.cookies.userid;
-  // if no userid, return login-again msg
-  if(!userid){
-    return res.send({code:400, msg:'请先登录！'})
-  }
-  //get pet info from req
-  const {name,profilePhoto} = req.body;
-  new PetListModel({
-    ownerId: userid,
-    name,
-    profilePhoto,
-  }).save(function(err,doc){
-    res.send({code:201, data:doc});
   });
 });
 
